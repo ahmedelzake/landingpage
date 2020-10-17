@@ -17,8 +17,9 @@
  * Define Global Variables
  * 
 */
-const navbar = document.querySelector('#navbar__list');
 const sections = document.querySelectorAll('section')
+
+const navbar = document.querySelector('#navbar__list');
 
 /**
  * End Global Variables
@@ -27,17 +28,17 @@ const sections = document.querySelectorAll('section')
 */
 
 // check which element is active
-function getActiveElem() {
+function ActiveElem() {
     maxSection = sections[0];
     minVal = 1000000;
-    for (item of sections) {
-        let bounding = item.getBoundingClientRect();
-        if (bounding.top > -300 & bounding.top < minVal) {
-            minVal = bounding.top;
-            maxSection = item;
+    for (section of sections) {
+        let bo = section.getBoundingClientRect();
+        if (bo.top > -300 & bo.top < minVal) {
+            minVal = bo.top;
+            max = section;
         };
     };
-    return maxSection;
+    return max;
 };
 
 /**
@@ -48,24 +49,24 @@ function getActiveElem() {
 
 // build the nav
 function addSections() {
-    for (let item of sections) {
-        let section = document.createElement('li');
+    for (let section of sections) {
+        let crsection = document.createElement('li');
         section.className = 'menu__link';
-        section.dataset.nav = item.id;
-        section.innerText = item.dataset.nav;
-        navbar.appendChild(section);
+        section.dataset.nav = section.id;
+        section.innerText = section.dataset.nav;
+        navbar.appendChild(crsection);
     };
 };
 
 // Add class 'active' to section when near top of viewport
-function setActive () {
+function activeItem () {
     window.addEventListener('scroll', function (event) {
-        let section = getActiveElem();
-        section.classList.add('your-active-class');
+        let actSection = ActiveElem();
+        actSection.classList.add('your-active-class');
         // set other sections as inactive
-        for (let item of sections) {
-            if (item.id != section.id & item.classList.contains('your-active-class')) {
-                item.classList.remove('your-active-class');
+        for (let section of sections) {
+            if (section.id != section.id & section.classList.contains('your-active-class')) {
+                section.classList.remove('your-active-class');
             }
         }
         // set corresponding header style
@@ -83,7 +84,7 @@ function setActive () {
 };
 
 // Scroll to anchor ID using scrollTO event
-function scrollToClick() {
+function clickChangepos() {
     navbar.addEventListener('click', function (event) {
         const clicked = document.querySelector('#' + event.target.dataset.nav)
         clicked.scrollIntoView();
@@ -101,8 +102,8 @@ function scrollToClick() {
 addSections();
 
 // Scroll to section on link click
-scrollToClick();
+clickChangepos();
 
 // Set sections as active
-setActive();
+activeItem();
 
